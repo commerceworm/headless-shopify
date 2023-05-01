@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MiniCart from "../components/minicart"
 
 const Header = () => {
   return (
@@ -18,6 +19,7 @@ const Header = () => {
           </span>
         </div>
       </Link>
+      <MiniCart />
     </header>
   );
 }

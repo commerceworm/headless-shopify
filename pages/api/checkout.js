@@ -3,10 +3,14 @@ import { callShopify, createCheckout } from "../../helpers/shopify";
 export default async function Subscribe(req, res) {
   const { variantId } = req.body;
 
+  console.log(variantId)
+
   try {
     const response = await callShopify(createCheckout, {
       variantId,
     });
+
+    console.log(response.errors)
 
     const { webUrl } = response.data.checkoutCreate.checkout;
 
