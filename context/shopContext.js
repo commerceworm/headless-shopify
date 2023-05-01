@@ -11,7 +11,10 @@ export default function ShopProvider({ children }) {
 
   useEffect(() => {
     console.log(cartOpen);
-  }, [cartOpen]);
+    console.log(checkoutId)
+    console.log(checkoutUrl)
+    console.log(cart.length)
+  }, [cartOpen, checkoutId, checkoutUrl]);
 
   const checkout = async (productVariant) => {
 
@@ -38,7 +41,8 @@ export default function ShopProvider({ children }) {
       }
 
       const data = await response.json()
-      console.log(data)
+
+      return data
   
 
     } catch (e) {
@@ -50,14 +54,13 @@ export default function ShopProvider({ children }) {
   async function addToCart(addedItem) {
     const newItem = { ...addedItem };
     setCartOpen(true);
-    console.log(newItem);
 
     if (cart.length === 0) {
       setCart([newItem]);
-      const checkoutData = await checkout(newItem.id);
+      const checkoutData = await checkout(newItem.variants.edges[0].node.id);
 
-      // setCheckoutId(checkoutData.id)
-      // setCheckoutUrl(checkoutData.webUrl)
+      setCheckoutId(checkoutData.checkoutId)
+      setCheckoutUrl(checkoutData.checkoutURL)
     }
   }
 

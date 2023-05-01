@@ -1,8 +1,8 @@
-const domain = process.env.SHOPIFY_STORE_DOMAIN
-const storefrontAccessToken = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN
+const domain = process.env.SHOPIFY_STORE_DOMAIN;
+const storefrontAccessToken = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN;
 
 export async function callShopify(query, variables = {}) {
-  const fetchUrl = `https://${domain}/api/2023-04/graphql.json`
+  const fetchUrl = `https://${domain}/api/2023-04/graphql.json`;
 
   const fetchOptions = {
     endpoint: fetchUrl,
@@ -12,20 +12,20 @@ export async function callShopify(query, variables = {}) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ query, variables }),
-  }
+  };
 
   try {
     const data = await fetch(fetchUrl, fetchOptions).then((response) =>
       response.json()
-    )
-    return data
+    );
+    return data;
   } catch (error) {
-    console.log(error)
-    throw new Error("Could not fetch products!")
+    console.log(error);
+    throw new Error("Could not fetch products!");
   }
 }
 
-const gql = String.raw
+const gql = String.raw;
 
 export const AllProducts = gql`
   query Products {
@@ -53,7 +53,7 @@ export const AllProducts = gql`
       }
     }
   }
-`
+`;
 
 export const Slugs = gql`
   query ProductSlugs {
@@ -65,7 +65,7 @@ export const Slugs = gql`
       }
     }
   }
-`
+`;
 
 export const singleProduct = gql`
   query ProductDetails($handle: String!) {
@@ -95,15 +95,18 @@ export const singleProduct = gql`
         }
       }
     }
-  }`
+  }
+`;
 
 export const createCheckout = gql`
-mutation CreateCheckout($variantId: ID!) {
-  checkoutCreate(input: {
-    lineItems: [{ variantId: $variantId, quantity: 1 }]
-  }) {
-    checkout {
-       webUrl
+  mutation CreateCheckout($variantId: ID!) {
+    checkoutCreate(
+      input: { lineItems: [{ variantId: $variantId, quantity: 1 }] }
+    ) {
+      checkout {
+        id
+        webUrl
+      }
     }
   }
-}`
+`;
