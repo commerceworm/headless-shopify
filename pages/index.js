@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import ProductCard from "../components/productcard"
+import ProductCard from "../components/ProductCard"
 
 import {  callShopify, AllProducts } from "../helpers/shopify"
 

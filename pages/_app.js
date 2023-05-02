@@ -1,4 +1,4 @@
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import ShopProvider from "../context/shopContext";
 import "../styles/globals.css";
 
