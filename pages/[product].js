@@ -7,11 +7,14 @@ const ProductDetails = ({ productData }) => {
 
   const { addToCart } = useContext(CartContext)
 
-  const imageNode = productData.images.edges[0].node
-  const title = productData.title
-  const price = productData.priceRange.maxVariantPrice.amount.replace(/\.0/g, '')
-  const description = productData.description
-  const productVariant = productData.variants.edges[0].node.id
+  const product = {
+    imageNode: productData.images.edges[0].node,
+    title: productData.title,
+    price: productData.priceRange.maxVariantPrice.amount.replace(/\.0/g, ''),
+    description: productData.description,
+    productVariantId: productData.variants.edges[0].node.id,
+    variantQuantity: 1
+  }
 
   return (
     <div
@@ -26,10 +29,10 @@ const ProductDetails = ({ productData }) => {
       <div className="w-full flex flex-1">
         <div className="w-full h-full relative">
           <Image
-            src={imageNode.url}
+            src={product.imageNode.url}
             alt=""
-            width={imageNode.width}
-            height={imageNode.height}
+            width={product.imageNode.width}
+            height={product.imageNode.height}
             className="w-full h-auto"
           />
         </div>
@@ -40,15 +43,15 @@ const ProductDetails = ({ productData }) => {
            sm:mt-0 mt-2 text-5xl font-light leading-large
           "
         >
-          {title}
+          {product.title}
         </h1>
-        <h2 className="text-2xl tracking-wide sm:py-8 py-6">${price}</h2>
-        <p className="text-gray-600 leading-7">{description}</p>
+        <h2 className="text-2xl tracking-wide sm:py-8 py-6">${product.price}</h2>
+        <p className="text-gray-600 leading-7">{product.description}</p>
         <div className="my-6"></div>
         <button
           className="text-sm tracking-wider bg-black text-white font-semibold py-4 px-12 border-2 border-black hover:border-transparent w-full"
           onClick={() => {
-            addToCart(productData)
+            addToCart(product)
           }}
         >
           <span>Buy</span>

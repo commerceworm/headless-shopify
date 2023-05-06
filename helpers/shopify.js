@@ -106,6 +106,64 @@ export const createCheckout = gql`
       checkout {
         id
         webUrl
+        lineItems(first: 25) {
+          edges {
+            node {
+              id
+              title
+              quantity
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const updateCheckout = gql`
+  mutation checkoutLineItemsUpdate(
+    $checkoutId: ID!
+    $lineItems: [CheckoutLineItemUpdateInput!]!
+  ) {
+    checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
+      checkout {
+        id
+        webUrl
+        lineItems(first: 25) {
+          edges {
+            node {
+              id
+              title
+              quantity
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const addCheckout = gql`
+  mutation checkoutLineItemsAdd(
+    $checkoutId: ID!
+    $lineItems: [CheckoutLineItemInput!]!
+  ) {
+    checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+      checkout {
+        id
+        webUrl
+        lineItems(first: 25) {
+          edges {
+            node {
+              id
+              title
+              quantity
+              variant {
+                id
+              }
+            }
+          }
+        }
       }
     }
   }
