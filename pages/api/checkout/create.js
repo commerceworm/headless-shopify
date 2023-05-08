@@ -1,6 +1,6 @@
 import { callShopify, createCheckout } from "../../../helpers/shopify";
 
-export default async function Subscribe(req, res) {
+export default async function CreateCheckout(req, res) {
   const { variantId } = req.body;
 
   try {

@@ -121,34 +121,11 @@ export const createCheckout = gql`
 `;
 
 export const updateCheckout = gql`
-  mutation checkoutLineItemsUpdate(
-    $checkoutId: ID!
-    $lineItems: [CheckoutLineItemUpdateInput!]!
-  ) {
-    checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
-      checkout {
-        id
-        webUrl
-        lineItems(first: 25) {
-          edges {
-            node {
-              id
-              title
-              quantity
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const addCheckout = gql`
-  mutation checkoutLineItemsAdd(
+  mutation checkoutLineItemsReplace(
     $checkoutId: ID!
     $lineItems: [CheckoutLineItemInput!]!
   ) {
-    checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+    checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
       checkout {
         id
         webUrl
@@ -158,9 +135,6 @@ export const addCheckout = gql`
               id
               title
               quantity
-              variant {
-                id
-              }
             }
           }
         }
