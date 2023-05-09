@@ -8,6 +8,7 @@ export default function ShopProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [checkoutId, setCheckoutId] = useState("");
   const [checkoutUrl, setCheckoutUrl] = useState("");
+  const [cartLoading, setCartLoading] = useState(false)
 
   useEffect(() => {
     console.log(cart)
@@ -51,7 +52,10 @@ export default function ShopProvider({ children }) {
   return (
     <CartContext.Provider
       value={{
+        cart,
         cartOpen,
+        cartLoading,
+        checkoutUrl,
         setCartOpen,
         addToCart,
       }}

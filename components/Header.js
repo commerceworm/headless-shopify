@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { useContext } from "react";
+import { CartContext } from "../context/shopContext";
 import MiniCart from "../components/minicart"
 
 const Header = () => {
+  const { cart } = useContext(CartContext);
   return (
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
       <Link href="/" passHref>
@@ -19,7 +22,7 @@ const Header = () => {
           </span>
         </div>
       </Link>
-      <MiniCart />
+      <MiniCart cart={cart}/>
     </header>
   );
 }
