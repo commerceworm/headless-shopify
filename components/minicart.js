@@ -7,7 +7,7 @@ import { formatter } from "../util/helpers";
 
 export default function MiniCart({ cart }) {
   const cancelButtonRef = useRef();
-  const { cartOpen, cartLoading, checkoutUrl, setCartOpen } = useContext(CartContext);
+  const { cartOpen, cartLoading, checkoutUrl, setCartOpen, incrementCartItem, decrementCartItem, removeCartItem, clearCart } = useContext(CartContext);
 
   let cartTotal = 0;
   cart.map((item) => {
@@ -99,9 +99,8 @@ export default function MiniCart({ cart }) {
                                   <Image
                                     src={product.imageNode.url}
                                     alt={product.title}
-                                    width={product.imageNode.width}
-                                    height={product.imageNode.height}
-                                    className="w-full h-auto"
+                                    fill
+                                    style={{objectFit:"cover"}}
                                   />
                                 </div>
 
@@ -110,7 +109,7 @@ export default function MiniCart({ cart }) {
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
                                         <Link
-                                          href={`/products/#}`}
+                                          href={product.handle}
                                           onClick={() => setCartOpen(false)}
                                           passHref
                                         >
@@ -131,7 +130,7 @@ export default function MiniCart({ cart }) {
                                       <button
                                         className="px-2"
                                         onClick={() =>
-                                          console.log("decrement cart item")
+                                          decrementCartItem(product)
                                         }
                                         disabled={cartLoading}
                                       >
@@ -143,7 +142,7 @@ export default function MiniCart({ cart }) {
                                       <button
                                         className="px-2"
                                         onClick={() =>
-                                          console.log("increment cart item")
+                                          incrementCartItem(product)
                                         }
                                         disabled={cartLoading}
                                       >
@@ -153,7 +152,7 @@ export default function MiniCart({ cart }) {
                                     <div className="flex">
                                       <button
                                         onClick={() =>
-                                          console.log("remove cart item")
+                                          removeCartItem(product.productVariantId)
                                         }
                                         type="button"
                                         className="font-medium text-gray-500 hover:text-gray-800"
@@ -199,7 +198,7 @@ export default function MiniCart({ cart }) {
                       <div className="flex justify-center mt-6 text-sm text-center text-gray-500">
                         <p>
                           <button
-                            onClick={() => console.log("clear cart")}
+                            onClick={() => clearCart()}
                             className="font-medium hover:text-gray-800"
                           >
                             Clear Cart

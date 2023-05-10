@@ -10,6 +10,7 @@ const ProductDetails = ({ productData }) => {
   const product = {
     imageNode: productData.images.edges[0].node,
     title: productData.title,
+    handle: productData.handle,
     price: productData.priceRange.maxVariantPrice.amount.replace(/\.0/g, ''),
     description: productData.description,
     productVariantId: productData.variants.edges[0].node.id,

@@ -73,6 +73,7 @@ export const singleProduct = gql`
       id
       title
       description
+      handle
       images(first: 10) {
         edges {
           node {
