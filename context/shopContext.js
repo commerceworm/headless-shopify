@@ -11,9 +11,19 @@ export default function ShopProvider({ children }) {
   const [cartLoading, setCartLoading] = useState(false)
 
   useEffect(() => {
-    console.log(cart)
-    console.log(checkoutUrl)
-  }, [cart]);
+    if (localStorage.checkout_id) {
+      const cartObject = JSON.parse(localStorage.checkout_id)
+
+      if (cartObject[0].id) {
+        setCart([cartObject[0]])
+      } else if (cartObject[0].length > 0) {
+        setCart(...[cartObject[0]])
+      }
+
+      setCheckoutId(cartObject[1].checkoutId)
+      setCheckoutUrl(cartObject[1].checkoutURL)
+    }
+  }, []);
 
   async function addToCart(addedItem) {
     const newItem = { ...addedItem };
@@ -28,6 +38,8 @@ export default function ShopProvider({ children }) {
 
       setCheckoutId(checkoutData.checkoutId)
       setCheckoutUrl(checkoutData.checkoutURL)
+
+      localStorage.setItem("checkout_id", JSON.stringify([newItem, checkoutData]))
     } else {
 
       let newCart = []
@@ -46,6 +58,7 @@ export default function ShopProvider({ children }) {
       }
       setCart(newCart)
       const newCheckout = await updateCheckout(newCart, checkoutId)
+      localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
     }
   }
 
@@ -57,6 +70,7 @@ export default function ShopProvider({ children }) {
 
     const newCheckout = await updateCheckout(updatedCart, checkoutId)
 
+    localStorage.setItem("checkout_id", JSON.stringify([updatedCart, newCheckout]))
     setCartLoading(false)
 
     if (cart.length === 1) {
@@ -78,6 +92,7 @@ export default function ShopProvider({ children }) {
     setCart(newCart)
     const newCheckout = await updateCheckout(newCart, checkoutId)
 
+    localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
     setCartLoading(false)
   }
 
@@ -97,6 +112,7 @@ export default function ShopProvider({ children }) {
 
       setCart(newCart)
       const newCheckout = await updateCheckout(newCart, checkoutId)
+      localStorage.setItem("checkout_id", JSON.stringify([newCart, newCheckout]))
     }
     setCartLoading(false)
   }
@@ -107,6 +123,7 @@ export default function ShopProvider({ children }) {
     setCart(updatedCart)
 
     const newCheckout = await updateCheckout(updatedCart, checkoutId)
+    localStorage.setItem("checkout_id", JSON.stringify([updatedCart, newCheckout]))
 
     setCartOpen(false)
 
